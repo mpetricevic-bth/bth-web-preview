@@ -120,51 +120,164 @@
     .navbar {
       position: fixed;
       top: 0; left: 0; right: 0;
-      z-index: 999;
+      z-index: 1000;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 1.1rem 4rem;
+      padding: 1rem 4rem;
       background: rgba(255,255,255,.97);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
       transition: box-shadow .35s var(--ease), padding .35s var(--ease);
     }
     .navbar.scrolled {
-      box-shadow: 0 2px 20px rgba(8,33,52,.08);
-      padding: .8rem 4rem;
+      box-shadow: 0 2px 20px rgba(8,33,52,.10);
+      padding: .75rem 4rem;
     }
-    .nav-logo img { height: 30px; }
+    .nav-logo { flex-shrink: 0; }
+    .nav-logo img { height: 30px; display: block; }
 
-    .nav-links { list-style: none; display: flex; gap: 2.2rem; }
+    /* Desktop links */
+    .nav-links { list-style: none; display: flex; align-items: center; gap: 1.8rem; }
     .nav-links a {
       text-decoration: none;
       font-family: var(--font-head);
       font-weight: 600;
-      font-size: .82rem;
-      letter-spacing: .04em;
+      font-size: .78rem;
+      letter-spacing: .05em;
       text-transform: uppercase;
       color: var(--navy);
-      padding-bottom: .4rem;
+      padding-bottom: .3rem;
       border-bottom: 2px solid transparent;
-      transition: color .25s;
+      white-space: nowrap;
+      transition: color .25s, border-color .25s;
     }
-    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
-    .nav-links a.active { border-bottom-color: var(--accent); }
+    .nav-links a:hover  { color: var(--accent); }
+    .nav-links a.active { color: var(--accent); border-bottom-color: var(--accent); }
 
     .nav-cta {
+      flex-shrink: 0;
       background: var(--accent-btn);
       color: var(--white);
       text-decoration: none;
       font-family: var(--font-head);
       font-weight: 700;
-      font-size: .78rem;
+      font-size: .75rem;
       letter-spacing: .06em;
       text-transform: uppercase;
-      padding: .7rem 1.6rem;
+      padding: .65rem 1.4rem;
       border-radius: 100px;
+      white-space: nowrap;
       transition: background .25s, transform .25s;
     }
     .nav-cta:hover { background: var(--grad-mid); transform: translateY(-1px); }
+
+    /* Hamburger button — hidden on desktop */
+    .nav-burger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 40px; height: 40px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+      border-radius: 8px;
+      z-index: 1100;
+      transition: background .2s;
+    }
+    .nav-burger:hover { background: var(--light); }
+    .nav-burger span {
+      display: block;
+      width: 24px; height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transform-origin: center;
+      transition: transform .35s var(--ease), opacity .25s, width .3s var(--ease);
+    }
+    .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .nav-burger.open span:nth-child(2) { opacity: 0; width: 0; }
+    .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Mobile overlay menu */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      z-index: 1050;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      padding: 5rem 2.5rem 3rem;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(100%);
+      transition: opacity .35s var(--ease), visibility .35s, transform .4s var(--ease);
+      overflow-y: auto;
+    }
+    .mobile-menu.open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: .25rem;
+      flex: 1;
+    }
+    .mobile-menu ul li { opacity: 0; transform: translateX(24px); transition: opacity .35s var(--ease), transform .35s var(--ease); }
+    .mobile-menu.open ul li { opacity: 1; transform: translateX(0); }
+    .mobile-menu.open ul li:nth-child(1) { transition-delay: .07s; }
+    .mobile-menu.open ul li:nth-child(2) { transition-delay: .12s; }
+    .mobile-menu.open ul li:nth-child(3) { transition-delay: .17s; }
+    .mobile-menu.open ul li:nth-child(4) { transition-delay: .22s; }
+    .mobile-menu.open ul li:nth-child(5) { transition-delay: .27s; }
+    .mobile-menu.open ul li:nth-child(6) { transition-delay: .32s; }
+    .mobile-menu.open ul li:nth-child(7) { transition-delay: .37s; }
+    .mobile-menu ul a {
+      display: block;
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.6rem;
+      color: rgba(255,255,255,.85);
+      padding: .75rem 0;
+      border-bottom: 1px solid rgba(255,255,255,.08);
+      transition: color .25s, padding-left .25s;
+    }
+    .mobile-menu ul a:hover { color: var(--accent); padding-left: .6rem; }
+    .mobile-menu .mobile-cta {
+      margin-top: 2.5rem;
+      display: inline-flex;
+      align-items: center;
+      gap: .9rem;
+      background: var(--accent-btn);
+      color: var(--white);
+      text-decoration: none;
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: .82rem;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      padding: .85rem .5rem .85rem 2rem;
+      border-radius: 100px;
+      align-self: flex-start;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity .35s var(--ease) .42s, transform .35s var(--ease) .42s, background .25s;
+    }
+    .mobile-menu.open .mobile-cta { opacity: 1; transform: translateY(0); }
+    .mobile-menu .mobile-cta:hover { background: var(--grad-mid); }
+    .mobile-menu .mobile-cta .arrow {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--white);
+      color: var(--accent-btn);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .mobile-menu .mobile-cta .arrow svg { width: 15px; height: 15px; }
 
     /* ─── HERO ───────────────────────────────────────────── */
     .hero {
@@ -478,8 +591,23 @@
     .footer-bottom-links a:hover { color: var(--accent); }
 
     /* ─── Responsive ─────────────────────────────────────── */
-    @media (max-width: 1100px) {
-      .navbar, .navbar.scrolled, .hero-content, .stats-band, .section,
+
+    /* Tight desktop — reduce nav padding/gap */
+    @media (max-width: 1280px) {
+      .navbar, .navbar.scrolled { padding-left: 2.5rem; padding-right: 2.5rem; }
+      .nav-links { gap: 1.3rem; }
+    }
+
+    /* Switch to hamburger below 1024px */
+    @media (max-width: 1024px) {
+      .nav-links, .nav-cta { display: none; }
+      .nav-burger { display: flex; }
+      .navbar, .navbar.scrolled { padding-left: 1.5rem; padding-right: 1.5rem; }
+    }
+
+    /* Tablet layout adjustments */
+    @media (max-width: 1024px) {
+      .hero-content, .stats-band, .section,
       .footprint, .partners-section, .final-cta-inner, footer { padding-left: 2rem; padding-right: 2rem; }
       .stats-band { grid-template-columns: 1fr; }
       .stats-grid { grid-template-columns: repeat(2, 1fr); }
@@ -491,11 +619,18 @@
       .final-cta-inner { grid-template-columns: 1fr; }
       .footer-grid { grid-template-columns: 1fr 1fr 1fr; }
     }
-    @media (max-width: 760px) {
-      .nav-links, .nav-cta { display: none; }
-      .usecases-grid { grid-template-columns: 1fr 1fr; }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .hero-content, .stats-band, .section,
+      .footprint, .partners-section, .final-cta-inner, footer { padding-left: 1.25rem; padding-right: 1.25rem; }
+      .usecases-grid { grid-template-columns: 1fr; }
+      .bento { grid-template-columns: 1fr; grid-template-rows: unset; }
+      .bento-card, .bento-card.large { grid-column: unset; height: 220px; }
       .footer-grid { grid-template-columns: 1fr 1fr; }
       .partners-logos { justify-content: center; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .refs-head { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -514,7 +649,27 @@
       <li><a href="#contact">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Contact Us</a>
+    <button class="nav-burger" id="navBurger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
   </nav>
+
+  <!-- Mobile full-screen menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <ul>
+      <li><a href="#home">Homepage</a></li>
+      <li><a href="#solutions">Solutions</a></li>
+      <li><a href="#usecases">Services</a></li>
+      <li><a href="#references">References</a></li>
+      <li><a href="#footprint">Company</a></li>
+      <li><a href="#partners">Careers</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="mobile-cta">
+      Contact Us
+      <span class="arrow"><svg viewBox="0 0 24 24" fill="none"><path d="M4 12h14m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+    </a>
+  </div>
 
   <!-- ═══════════════ HERO ═══════════════ -->
   <section class="hero" id="home">
@@ -835,10 +990,31 @@
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     window.scrollTo(0, 0);
 
-    const navbar = document.getElementById('navbar');
+    const navbar     = document.getElementById('navbar');
+    const navBurger  = document.getElementById('navBurger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
     window.addEventListener('scroll', () => {
       navbar.classList.toggle('scrolled', window.scrollY > 60);
     }, { passive: true });
+
+    function toggleMenu(open) {
+      navBurger.classList.toggle('open', open);
+      navBurger.setAttribute('aria-expanded', open);
+      mobileMenu.classList.toggle('open', open);
+      mobileMenu.setAttribute('aria-hidden', !open);
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+    navBurger.addEventListener('click', () => toggleMenu(!mobileMenu.classList.contains('open')));
+
+    mobileMenu.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => toggleMenu(false));
+    });
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') toggleMenu(false);
+    });
 
     const heroBg = document.getElementById('heroBg');
     requestAnimationFrame(() => requestAnimationFrame(() => heroBg.classList.add('loaded')));
